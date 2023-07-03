@@ -31,7 +31,7 @@ const Header = () => {
           <input
             name='preference'
             type='text'
-            placeholder='How Hungry You Wanna Be?'
+            placeholder='How Hungry Are you?'
             className='input-header'
             value={sendPreference.term}
             onChange={(e) =>
