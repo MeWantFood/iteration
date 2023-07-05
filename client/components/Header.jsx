@@ -3,7 +3,7 @@ import { Link, Outlet } from 'react-router-dom';
 import './header.scss';
 import axios from 'axios';
 
-const Header = () => {
+const Header = ({ loggedInUser }) => {
   const [sendPreference, setSendPreference] = useState({
     term: '',
     location: '',
@@ -53,8 +53,8 @@ const Header = () => {
         <div className='account-container'>
           <div className='profile-pic-plain-color'></div>
           <div className='account-name-container'>
-            <p className='account-name'>Dawit</p>
-            <p className='account-name'>Merid</p>
+            <p className='account-name'>{loggedInUser.first_name}</p>
+            <p className='account-name'>{loggedInUser.last_name}</p>
           </div>
         </div>
       </main>
