@@ -3,14 +3,14 @@ import Card from './Card';
 import './main.scss';
 import axios from 'axios';
 
-const Main = (props) => {
-  // const {zipCode} = props
-
+const Main = ( {loggedInUser }) => {
+  const { storedZipcode } = loggedInUser.zipcode;
+  console.log('console log zipcode from MAIN.jsx : ', loggedInUser.zipcode);
   const [fetchedData, setFetchedData] = useState([]);
-
+  
   useEffect(() => {
     axios
-      .get('http://localhost:3000/yelp')
+      .get(`http://localhost:3000/yelp/${loggedInUser.zipcode}`)
       .then((response) => {
         const rawData = response.data.businesses;
         setFetchedData(rawData);

@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import "./login.scss";
+import './login.scss';
 
-function Login() {
+function Login({ loggedInSetter }) {
   //direct you anywhere as long as you have specified that path before
   const navigate = useNavigate();
 
@@ -34,6 +34,7 @@ function Login() {
         if (data.error) {
           alert('Wrong Username/Password');
         } else {
+          loggedInSetter(data);
           navigate('/home');
         }
       })
