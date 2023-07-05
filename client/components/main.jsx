@@ -3,21 +3,21 @@ import Card from './Card';
 import './main.scss';
 import axios from 'axios';
 
-const Main = ({ loggedInUser }) => {
-  const zipcode = loggedInUser.zipcode ? loggedInUser.zipcode : '11238';
-  console.log('console log zipcode from MAIN.jsx : ', loggedInUser.zipcode);
-  const [fetchedData, setFetchedData] = useState([]);
+const Main = ({ fetchedData, loggedInUser }) => {
+  // const zipcode = loggedInUser.zipcode ? loggedInUser.zipcode : '11238';
+  // console.log('console log zipcode from MAIN.jsx : ', loggedInUser.zipcode);
+  // const [fetchedData, setFetchedData] = useState([]);
 
-  useEffect(() => {
-    axios
-      // .get(`http://localhost:3000/yelp/${loggedInUser.zipcode}`)
-      .get(`http://localhost:3000/yelp/${zipcode}`)
-      .then((response) => {
-        const rawData = response.data.businesses;
-        setFetchedData(rawData);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     // .get(`http://localhost:3000/yelp/${loggedInUser.zipcode}`)
+  //     .get(`http://localhost:3000/yelp/${zipcode}`)
+  //     .then((response) => {
+  //       const rawData = response.data.businesses;
+  //       setFetchedData(rawData);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, []);
 
   return (
     <article className='main'>

@@ -36,7 +36,7 @@ yelpController.getData = (req, res, next) => {
 
   fetchInfo.config = {
     headers: {
-      Authorization: `Bearer ${BEARER_TOKEN3}`,
+      Authorization: `Bearer ${BEARER_TOKEN2}`,
       Origin: 'localhost',
       withCredentials: true,
     },

@@ -3,8 +3,8 @@ import { Link, Outlet } from 'react-router-dom';
 import './header.scss';
 import axios from 'axios';
 
-const Header = ({ loggedInUser }) => {
-  const [sendPreference, setSendPreference] = useState({
+const Header = ({ loggedInUser, zipcodeSetter }) => {
+  const [searchParams, setSearchParams] = useState({
     term: '',
     location: '',
   });
@@ -12,14 +12,16 @@ const Header = ({ loggedInUser }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('clicked');
-    console.log(sendPreference);
-    axios
-      .post('/yelp/search', sendPreference)
-      .then((response) => {
-        console.log('data sent to server');
-        console.log(response.data);
-      })
-      .catch((error) => console.log(error));
+    console.log(searchParams.location);
+    zipcodeSetter(searchParams.location);
+
+    // axios
+    //   .post('/yelp/search', searchParams)
+    //   .then((response) => {
+    //     console.log('data sent to server');
+    //     console.log(response.data);
+    //   })
+    //   .catch((error) => console.log(error));
   };
 
   return (
@@ -33,9 +35,9 @@ const Header = ({ loggedInUser }) => {
             type='text'
             placeholder='How Hungry You Wanna Be?'
             className='input-header'
-            value={sendPreference.term}
+            value={searchParams.term}
             onChange={(e) =>
-              setSendPreference({ ...sendPreference, term: e.target.value })
+              setSearchParams({ ...searchParams, term: e.target.value })
             }
           />
           <input
@@ -43,9 +45,9 @@ const Header = ({ loggedInUser }) => {
             type='text'
             placeholder='Enter Location'
             className='input-header'
-            value={sendPreference.location}
+            value={searchParams.location}
             onChange={(e) =>
-              setSendPreference({ ...sendPreference, location: e.target.value })
+              setSearchParams({ ...searchParams, location: e.target.value })
             }
           />
           <button className='btn search-btn'>Search</button>
