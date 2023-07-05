@@ -9,10 +9,10 @@
     "dev": "concurrently \"cross-env NODE_ENV=development webpack-dev-server --open --hot --progress --color \" \"nodemon ./server/server.js\"",
     "test": "jest --verbose"
   },
-  "jest":{
-    "transform": {
-      "\\.jsx?$": "babel-jest",
-      "\\.(css|scss)$": "jest-transform-css"
+  "jest": {
+    "testEnvironment": "jest-environment-jsdom",
+    "moduleNameMapper": {
+      "\\.(css|less|scss|sass)$": "identity-obj-proxy" 
     }
   },
   "keywords": [],
@@ -20,6 +20,7 @@
   "license": "ISC",
   "dependencies": {
     "@testing-library/jest-dom": "^5.15.0",
+    "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.4.0",
     "bcryptjs": "^2.4.3",
@@ -54,6 +55,7 @@
     "css-loader": "^6.8.1",
     "eslint": "^7.12.0",
     "html-webpack-plugin": "^5.5.3",
+    "identity-obj-proxy": "^3.0.0",
     "jest": "^29.6.0",
     "jest-environment-jsdom": "^29.6.0",
     "jest-puppeteer": "^9.0.0",
