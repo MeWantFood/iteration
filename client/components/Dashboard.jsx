@@ -14,8 +14,9 @@ function Dashboard({ loggedInUser }) {
   const [fetchedData, setFetchedData] = useState([]);
 
   useEffect(() => {
-    if (!loggedInUser.zipcode || loggedInUser.zipcode.length < 5)
+    if (!loggedInUser.zipcode || loggedInUser.zipcode.length < 5) {
       loggedInUser.zipcode = '11238';
+    }
     setZipcode(loggedInUser.zipcode);
     axios
       // .get(`http://localhost:3000/yelp/${loggedInUser.zipcode}`)

@@ -51,6 +51,7 @@ yelpController.getData = (req, res, next) => {
   axios
     .get('https://api.yelp.com/v3/businesses/search', fetchInfo.config)
     .then((response) => {
+      console.log(response);
       res.locals.rawData = response.data;
       return next();
     })
