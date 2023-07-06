@@ -2,10 +2,13 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
-const axios = require('axios');
+// const axios = require('axios');
 
 const userController = require('./controllers/userController');
+const cookieController = require('./controllers/cookieController');
+const sessionController = require('./controllers/sessionController');
 
 // add route import
 // add model import
@@ -27,9 +30,8 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-
 // allows us to store the cookie on our backend
-// app.use(cookieParser());
+app.use(cookieParser());
 
 // statically serve everything in the build folder on the route '/build'
 app.use(express.static(path.join(__dirname, '../build')));
@@ -38,21 +40,35 @@ app.get('/', (req, res) => {
   return res.status(200).sendFile(path.join(__dirname, '../index.html'));
 });
 
-//YELP API REQUEST
+// YELP API REQUEST
 // get request for yelp.
 const yelpRouter = require('./routes/yelp');
 app.use('/yelp', yelpRouter);
 
 // post method for user to db
-app.post('/signup', userController.createUser, (req, res) => {
-  console.log('--entering post method for route--');
-  return res.status(200).json(res.locals.newUser);
-});
+app.post(
+  '/signup',
+  userController.createUser,
+  cookieController.setSSID,
+  sessionController.startSession,
+  (req, res) => {
+    // console.log('--entering post method for route--');
+    return res.status(200).json(res.locals.newUser);
+  }
+);
 
-app.post('/login', userController.getUser, (req, res) => {
-  // upon successful sign up
-  return res.status(200).json(res.locals.user);
-});
+app.post(
+  '/login',
+  userController.verifyUser,
+  cookieController.setSSID,
+  sessionController.startSession,
+  (req, res) => {
+    // upon successful sign up
+    // console.log('----about to return a status----');
+    // console.log('res.locals rn: ', res.locals);
+    return res.status(200).json(res.locals.user);
+  }
+);
 // app.use('/dashboard', routenamevar);
 
 // Serve index.html for all routes
@@ -71,11 +87,12 @@ app.use((err, req, res, next) => {
   };
   const errorObj = Object.assign({}, defaultErr, err);
   console.log(errorObj.log);
+  // sending to client
   return res.status(errorObj.status).json(errorObj.message);
 });
 
 app.listen(3000, () => {
   console.log('Express listening on port 3000');
-}); //listens on port 3000 -> http://localhost:3000/
+}); // listens on port 3000 -> http://localhost:3000/
 
 module.exports = app;
