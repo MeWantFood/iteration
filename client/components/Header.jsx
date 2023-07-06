@@ -1,25 +1,35 @@
 import React, { useState } from 'react';
 import { Link, Outlet } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './header.scss';
 import axios from 'axios';
 
-const Header = () => {
-  const [sendPreference, setSendPreference] = useState({
+const Header = ({ loggedInUser, loggedInSetter, zipcodeSetter }) => {
+  const [searchParams, setSearchParams] = useState({
     term: '',
     location: '',
   });
 
+  const navigate = useNavigate();
+
+  const logout = () => {
+    loggedInSetter(null);
+    navigate('/');
+  }  
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('clicked');
-    console.log(sendPreference);
-    axios
-      .post('/yelp/search', sendPreference)
-      .then((response) => {
-        console.log('data sent to server');
-        console.log(response.data);
-      })
-      .catch((error) => console.log(error));
+    console.log(searchParams.location);
+    zipcodeSetter(searchParams.location);
+
+    // axios
+    //   .post('/yelp/search', searchParams)
+    //   .then((response) => {
+    //     console.log('data sent to server');
+    //     console.log(response.data);
+    //   })
+    //   .catch((error) => console.log(error));
   };
 
   return (
@@ -31,11 +41,11 @@ const Header = () => {
           <input
             name='preference'
             type='text'
-            placeholder='How Hungry Are you?'
+            placeholder='WHAT TO EAT?'
             className='input-header'
-            value={sendPreference.term}
+            value={searchParams.term}
             onChange={(e) =>
-              setSendPreference({ ...sendPreference, term: e.target.value })
+              setSearchParams({ ...searchParams, term: e.target.value })
             }
           />
           <input
@@ -43,19 +53,18 @@ const Header = () => {
             type='text'
             placeholder='Enter Location'
             className='input-header'
-            value={sendPreference.location}
+            value={searchParams.location}
             onChange={(e) =>
-              setSendPreference({ ...sendPreference, location: e.target.value })
+              setSearchParams({ ...searchParams, location: e.target.value })
             }
           />
           <button className='btn search-btn'>Search</button>
         </form>
         <div className='account-container'>
-          <div className='profile-pic-plain-color'></div>
-          <div className='account-name-container'>
-            <p className='account-name'>Dawit</p>
-            <p className='account-name'>Merid</p>
+        <div className='account-name-container'>
+            <p className='account-name'>{loggedInUser.first_name} {loggedInUser.last_name}</p>
           </div>
+          <div onClick={logout} className='profile-pic-plain-color'>LogOut</div>
         </div>
       </main>
     </>

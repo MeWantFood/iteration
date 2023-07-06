@@ -60,56 +60,56 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../index.html"));
 });
 
-// ----------- TESTING STUFFS -----------
+// // ----------- TESTING STUFFS -----------
 
-const BEARER_TOKEN3 =
-  "3fL-Z1zOIZnAWPYAVo462Sbf4R9ODxQ0CQXTW2KXAFRQeLuHyX38jrBGDIeplBuy04evgJvqVMj3zUhR1mFN2WzaxnyVRwvwboqceelX108pa3gL2jFOoyTXnj-fZHYx";
+// const BEARER_TOKEN3 =
+//   "3fL-Z1zOIZnAWPYAVo462Sbf4R9ODxQ0CQXTW2KXAFRQeLuHyX38jrBGDIeplBuy04evgJvqVMj3zUhR1mFN2WzaxnyVRwvwboqceelX108pa3gL2jFOoyTXnj-fZHYx";
 
-// dummy zipCode
-// const location = ;
+// // dummy zipCode
+// // const location = ;
 
-// config file for fetching from yelp
-// use the limit to adjust the number of restaurants displayed
-// you can also change the term to another one to get any business
-const fetchInfo = {
-  headers: {
-    Authorization: `Bearer ${BEARER_TOKEN3}`,
-    Origin: "localhost",
-    withCredentials: true,
-  },
-  params: {
-    term: "restaurants",
-    location: 22181,
-    radius: 5000,
-    limit: 3,
-  },
-};
+// // config file for fetching from yelp
+// // use the limit to adjust the number of restaurants displayed
+// // you can also change the term to another one to get any business
+// const fetchInfo = {
+//   headers: {
+//     Authorization: `Bearer ${BEARER_TOKEN3}`,
+//     Origin: "localhost",
+//     withCredentials: true,
+//   },
+//   params: {
+//     term: "restaurants",
+//     location: 22181,
+//     radius: 5000,
+//     limit: 3,
+//   },
+// };
 
-const getData = async () => {
-  axios
-    .get("https://api.yelp.com/v3/businesses/search", fetchInfo)
-    .then((response) => {
-      console.log("logging response.data", response.data);
-      console.log(
-        "logging categories for one object",
-        response.data.businesses[2].categories
-      );
-      console.log(
-        "logging categories for one object",
-        response.data.businesses[2].transactions
-      );
-      return response.data;
-    })
-    .catch((error) => {
-      console.log(error);
-      // return next({
-      //   log: `Express error handler caught unknown middleware error: ERROR : ${error}`,
-      //   status: error.status || 400,
-      // });
-    });
-};
+// const getData = async () => {
+//   axios
+//     .get("https://api.yelp.com/v3/businesses/search", fetchInfo)
+//     .then((response) => {
+//       console.log("logging response.data", response.data);
+//       console.log(
+//         "logging categories for one object",
+//         response.data.businesses[2].categories
+//       );
+//       console.log(
+//         "logging categories for one object",
+//         response.data.businesses[2].transactions
+//       );
+//       return response.data;
+//     })
+//     .catch((error) => {
+//       console.log(error);
+//       // return next({
+//       //   log: `Express error handler caught unknown middleware error: ERROR : ${error}`,
+//       //   status: error.status || 400,
+//       // });
+//     });
+// };
 
-getData();
+// getData();
 
 /**
  * HELLO!

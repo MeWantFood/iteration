@@ -4,6 +4,13 @@ import './card.scss';
 
 const Card = (props) => {
   const { picUrl, name, location, closes, price } = props;
+  console.log(location);
+
+  const locationLines = location.map((line) => (
+    <p className='location' key={location.indexOf(line)}>
+      {line}
+    </p>
+  ));
 
   return (
     <div className='card'>
@@ -14,7 +21,7 @@ const Card = (props) => {
         </div>
         <div className='card-details'>
           <h5 className='card-name'>{name}</h5>
-          <p className='locaton'>{location} </p>
+          {locationLines}
           <p className='description'>
             {price ? price : 'Price is not available'}
           </p>
