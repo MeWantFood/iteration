@@ -9,6 +9,9 @@ const BEARER_TOKEN2 =
 const BEARER_TOKEN3 =
   '3fL-Z1zOIZnAWPYAVo462Sbf4R9ODxQ0CQXTW2KXAFRQeLuHyX38jrBGDIeplBuy04evgJvqVMj3zUhR1mFN2WzaxnyVRwvwboqceelX108pa3gL2jFOoyTXnj-fZHYx';
 
+const BEARER_TOKEN4 =
+  'NQtgqFXiB4H1t9aKk24hEWeKskMM19YNJqXHuIBWiuk7FFPKKVU7r2eyuezHs1_jJUZvqY0HZ5ShL7_aGp_Ntya_4o7GUDBUj8YeZXX5ORPb2ZjthIPwlBKJNCanZHYx';
+
 // dummy zipCode
 const location = 20912;
 
@@ -17,7 +20,7 @@ const location = 20912;
 // you can also change the term to another one to get any business
 fetchInfo.config = {
   headers: {
-    Authorization: `Bearer ${BEARER_TOKEN2}`,
+    Authorization: `Bearer ${BEARER_TOKEN4}`,
     Origin: 'localhost',
     withCredentials: true,
   },

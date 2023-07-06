@@ -4,11 +4,11 @@ const router = express.Router();
 const sessionController = require('../controllers/sessionController');
 const yelpController = require('../controllers/yelpController');
 
-router.get('/', yelpController.getData, (req, res) => {
+router.get('/', sessionController.isLoggedIn, yelpController.getData, (req, res) => {
   return res.status(200).json(res.locals.rawData);
 });
 
-// router.get('/', sessionController.isLoggedIn, yelpController.getData, (req, res) => {
+// router.get('/', yelpController.getData, (req, res) => {
 //   return res.status(200).json(res.locals.rawData);
 // });
 
