@@ -49,7 +49,7 @@ function Signup() {
         return res.json();
       })
       .then((data) => {
-        console.log('this is data:', data);
+        // console.log('this is data:', data);
         navigate('/');
       })
       .catch((error) => {

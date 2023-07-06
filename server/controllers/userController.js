@@ -1,3 +1,4 @@
+const bcrypt = require('bcryptjs');
 const User = require('../models/userModel');
 
 const UserController = {};
@@ -8,13 +9,13 @@ UserController.createUser = (req, res, next) => {
   const { first_name, last_name, password, username, zipcode } = req.body;
   // console.log(typeof firstName, typeof lastName);
 
-  const newUser = new User({
+  const newUser = {
     first_name,
     last_name,
     password,
     username,
     zipcode: Number(zipcode),
-  });
+  };
   // console.log('newUser', newUser);
 
   User.create(newUser)
@@ -34,24 +35,50 @@ UserController.createUser = (req, res, next) => {
 };
 
 // get method for fetching user based off of username
-UserController.getUser = (req, res, next) => {
+UserController.verifyUser = (req, res, next) => {
   const { username, password } = req.body;
-  // console.log(req.body);
-  User.findOne({ username: username })
+  // confirm that both the username and password field are submitted
+  if (!username || !password) {
+    return next({
+      log: 'userController.verifyUser ERROR: missing input fields',
+      status: 401,
+      message: {
+        error: 'Missing fields, try again. Error in userController.verifyUser.',
+      },
+    });
+  }
+
+  User.findOne({ username })
     .then((user) => {
-      //console.log('user', user);
-      if (user) {
-        // if user is found successfully
-        res.locals.user = user;
-        return next();
-      } else {
+      // console.log('user', user);
+      if (!user) {
+        // if user is not found successfully
         return next({
-          log: 'userController.getUser ERROR: user not found',
+          log: 'userController.verifyUser ERROR: user not found',
           status: 401,
           message: {
             error:
-              'Invalid credentials, user not found. Error in userController.getUser.',
+              'Invalid credentials, user not found. Error in userController.verifyUser.',
           },
+        });
+      } else {
+        // determine if inputted password matches hashed version stored in database
+        bcrypt.compare(password, user.password).then((result) => {
+          if (!result) {
+            // if the stored password doesn't match
+            return next({
+              log: 'userController.verifyUser ERROR: user not found',
+              status: 401,
+              message: {
+                error:
+                  'Invalid credentials, user not found. Error in userController.verifyUser.',
+              },
+            });
+          } else {
+            // if the stored password matches, save user in res.locals
+            res.locals.user = user;
+            return next();
+          }
         });
       }
     })
@@ -59,8 +86,10 @@ UserController.getUser = (req, res, next) => {
       // return res.status(400).json({ error: 'failed to fetch user' });
       return next({
         log: `userController.getUser ERROR: ${err}`,
-        status: 500, //internal server error
-        message: { error: 'Error in userController.getUser. See log.' },
+        status: 500, // internal server error
+        message: {
+          error: 'Database error in userController.getUser. See log.',
+        },
       });
     });
 };

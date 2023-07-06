@@ -31,7 +31,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // allows us to store the cookie on our backend
-app.use(cookieParser());
+// app.use(cookieParser());
 
 // statically serve everything in the build folder on the route '/build'
 app.use(express.static(path.join(__dirname, '../build')));
