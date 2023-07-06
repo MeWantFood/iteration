@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const SALT_WORK_FACTOR = 10;
 const Schema = mongoose.Schema;
 
 // set a schema for the 'users' collectionx

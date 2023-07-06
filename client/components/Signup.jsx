@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './signup.scss';
 
@@ -18,15 +18,14 @@ function Signup() {
     e.preventDefault();
 
     // const formData = new FormData();
-
     // const firstName = formData.get("firstname");
     // const lastName = formData.get("lastname");
     // const username = formData.get("username");
     // const password = formData.get("password");
     // const zipcode = formData.get("zipcode");
 
-    const firstName = firstNameRef.current.value;
-    const lastName = lastNameRef.current.value;
+    const first_name = firstNameRef.current.value;
+    const last_name = lastNameRef.current.value;
     const username = usernameRef.current.value;
     const password = passwordRef.current.value;
     const zipcode = zipcodeRef.current.value;
@@ -38,11 +37,11 @@ function Signup() {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        first_name: firstName,
-        last_name: lastName,
-        username: username,
-        password: password,
-        zipcode: zipcode,
+        first_name,
+        last_name,
+        username,
+        password,
+        zipcode,
       }),
     })
       .then((res) => {
