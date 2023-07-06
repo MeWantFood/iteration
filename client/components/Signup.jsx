@@ -7,7 +7,6 @@ function Signup() {
   const navigate = useNavigate();
 
   const URL = 'http://localhost:3000/signup';
-  const URL = 'http://localhost:3000/signup';
 
   const firstNameRef = useRef(null);
   const lastNameRef = useRef(null);
@@ -34,10 +33,7 @@ function Signup() {
     fetch(URL, {
       method: 'POST',
       mode: 'cors',
-      method: 'POST',
-      mode: 'cors',
       headers: {
-        'Content-Type': 'application/json',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -55,16 +51,15 @@ function Signup() {
         // console.log('this is data:', data);
         navigate('/home');
       })
-      .catch(((error)) =>  {
+      .catch((error) => {
         console.error('invalid setup');
       });
   };
 
   const goBack = () => {
-
-  const goBack = () => {
-    navigate('/');
-  };
+    const goBack = () => {
+      navigate('/');
+    };
   };
 
   return (
