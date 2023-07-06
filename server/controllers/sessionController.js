@@ -20,7 +20,7 @@ SessionController.isLoggedIn = (req, res, next) => {
     .then((session) => {
         if (!session) {
             // session invalid or expired
-            return res.redirect('/signup');
+            return res.redirect('/login');
         } else {
             // session is valid
             return next();
@@ -34,7 +34,6 @@ SessionController.isLoggedIn = (req, res, next) => {
         message: { error: 'An error occurred in SessionController.isLoggedIn' },
       });
     });
-  return next();
 };
 
 module.exports = SessionController;

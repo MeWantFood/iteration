@@ -27,6 +27,10 @@ const userSchema = new Schema({
   },
 });
 
+//for pw hashing
+// User.create({})
+// --> const newUser = new User({});
+// --> newUser.save();
 userSchema.pre('save', function (next) {
   bcrypt
     .hash(this.password, SALT_WORK_FACTOR)

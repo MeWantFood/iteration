@@ -1,4 +1,5 @@
 const { v4: uuidv4 } = require('uuid');
+// const cookieParser = require('cookie-parser');
 const CookieController = {};
 
 CookieController.setSSID = (req, res, next) => {
@@ -6,7 +7,7 @@ CookieController.setSSID = (req, res, next) => {
   res.locals.ssid = uuidv4();
   res.cookie('ssid', res.locals.ssid, {
     httpOnly: true,
-    secure: true,
+    // secure: true,
     maxAge: 900000, // 15 minutes
   });
   return next();
