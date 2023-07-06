@@ -4,7 +4,7 @@ import Main from './main';
 import './dashboard.scss';
 import axios from 'axios';
 
-function Dashboard({ loggedInUser }) {
+function Dashboard({ loggedInUser, loggedInSetter }) {
   const [zipcode, setZipcode] = useState();
 
   const zipcodeSetter = setZipcode;
@@ -36,7 +36,7 @@ function Dashboard({ loggedInUser }) {
 
   return (
     <div className='dashboard'>
-      <Header loggedInUser={loggedInUser} zipcodeSetter={zipcodeSetter} />
+      <Header loggedInUser={loggedInUser} loggedInSetter={loggedInSetter} zipcodeSetter={zipcodeSetter} />
       <Main fetchedData={fetchedData} loggedInUser={loggedInUser} />
     </div>
   );

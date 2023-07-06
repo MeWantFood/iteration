@@ -13,9 +13,9 @@ function App() {
   return (
     <>
       <Routes>
-        <Route exact path='/' element={<Login loggedInSetter={loggedInSetter}/>}></Route>
+        {!loggedInUser && <Route exact path='/' element={<Login loggedInSetter={loggedInSetter}/>}></Route>}
         <Route exact path='/signup' element={<Signup />}></Route>
-        <Route exact path='/home' element={<Dashboard loggedInUser={loggedInUser}/>}></Route>
+        {loggedInUser && <Route exact path='/home' element={<Dashboard loggedInUser={loggedInUser} loggedInSetter={loggedInSetter}/>}></Route>}
       </Routes>
     </>
   );
