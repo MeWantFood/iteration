@@ -54,15 +54,16 @@ yelpController.getData = (req, res, next) => {
   axios
     .get('https://api.yelp.com/v3/businesses/search', fetchInfo.config)
     .then((response) => {
-      console.log(response);
+      // console.log(response);
       res.locals.rawData = response.data;
       return next();
     })
     .catch((error) => {
       //   console.log(err);
       return next({
-        log: `Express error handler caught unknown middleware error: ERROR : ${error}`,
+        log: `Error in yelpController.getData: ERROR: ${error}`,
         status: error.status || 400,
+        message: { error: 'Error in yelpController.getData. See log. ' },
       });
     });
 };
@@ -70,6 +71,7 @@ yelpController.getData = (req, res, next) => {
 yelpController.searchData = (req, res, next) => {
   console.log('entered search controller');
   console.log(req.body);
+  return next();
 };
 
 module.exports = yelpController;

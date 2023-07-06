@@ -10,7 +10,7 @@ function Dashboard({ loggedInUser, loggedInSetter }) {
   const zipcodeSetter = setZipcode;
 
   // const zipcode = loggedInUser.zipcode ? loggedInUser.zipcode : '11238';
-  console.log('console log zipcode from MAIN.jsx : ', loggedInUser.zipcode);
+  // console.log('console log zipcode from MAIN.jsx: ', loggedInUser.zipcode);
   const [fetchedData, setFetchedData] = useState([]);
 
   useEffect(() => {

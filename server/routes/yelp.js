@@ -8,6 +8,10 @@ router.get('/', sessionController.isLoggedIn, yelpController.getData, (req, res)
   return res.status(200).json(res.locals.rawData);
 });
 
+// router.get('/:zip', yelpController.getData, (req, res) => {
+//   return res.status(200).json(res.locals.rawData);
+// });
+
 router.get('/:zip', sessionController.isLoggedIn, yelpController.getData, (req, res) => {
   return res.status(200).json(res.locals.rawData);
 });
