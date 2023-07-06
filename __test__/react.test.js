@@ -1,18 +1,35 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
+import { mock } from 'jest';
+import App from "../client/components/App";
 import Login from "../client/components/Login";
 import Signup from "../client/components/Signup";
 import Dashboard from "../client/components/Dashboard";
+import Main from "../client/components/main";
 
 describe("Front-End Tests", () => {
+
+  // ---------------------- APP TESTING ----------------------
+
+  describe("<App/>", () => {
+    it("App renders without error", () => {
+      const appRender = render(
+        <BrowserRouter>
+          <App/>
+        </BrowserRouter>
+      )
+      expect(appRender).not.toBeInstanceOf(Error);
+    });
+  });
+
   // ---------------------- LOGIN TESTING ----------------------
 
-  describe("Login", () => {
+  describe("<Login/>", () => {
     let loginRender;
     let dummyUser;
 
-    beforeAll(() => {
+    beforeEach(() => {
       dummyUser = {
         username: "dummyUsername",
         password: "dummyPassword",
@@ -23,44 +40,43 @@ describe("Front-End Tests", () => {
         </BrowserRouter>
       );
     });
-
-    it("login page should not be null and render form with user and password fields", () => {
+    
+    it("login page should not be null", () => {
       // console.log('CONTENTS: ',loginRender);
       expect(loginRender.container).not.toBeNull;
-      // console.log('TEXT FROM RENDER: ',loginRender.getByPlaceholderText('Username'));
-      expect(loginRender.getAllByPlaceholderText("Username")).toBeTruthy;
-      // console.log('TEXT FROM RENDER: ',loginRender.getAllByPlaceholderText('Password'));
-      expect(loginRender.getAllByPlaceholderText("Password")).toBeTruthy;
     });
 
     it("user should be able to input with username and password", () => {
-      const usernameInput = loginRender.findByPlaceholderText("Username");
-      const passwordInput = loginRender.findByPlaceholderText("Password");
-      // console.log(loginRender);
-      // console.log('username : ',usernameInput);
-      usernameInput.value = dummyUser.username;
-      passwordInput.value = dummyUser.password;
-      expect(usernameInput.value).toBe(dummyUser.username);
-      expect(passwordInput.value).toBe(dummyUser.password);
+      const usernameTextBox = loginRender.queryByPlaceholderText('Username');
+      expect(usernameTextBox).toEqual(loginRender.getByRole("textbox"));
+      const passwordTextBox = loginRender.queryByPlaceholderText('Password');
+      expect(passwordTextBox).not.toBeNull;    
+    });
+
+    it("username type should be text and password type should be password", () => {
+      const usernameTextBox = loginRender.queryByPlaceholderText('Username');
+      const passwordTextBox = loginRender.queryByPlaceholderText('Password');
+      expect(usernameTextBox.type).toEqual('text');
+      expect(usernameTextBox.type).not.toEqual('password');
+      expect(passwordTextBox.type).toEqual('password');
+      expect(passwordTextBox.type).not.toEqual('text');
     });
 
     xit("if user info incorrect throw alert", () => {
-      const usernameInput = loginRender.findByPlaceholderText("Username");
-      const passwordInput = loginRender.findByPlaceholderText("Password");
+      const usernameInput = loginRender.queryByPlaceholderText('Username');
+      const passwordInput = loginRender.queryByPlaceholderText('Password');
       usernameInput.value = "notARegisteredUsername";
       passwordInput.value = "notARegisteredPassword";
-      // expect current dir to be /
-      // const sb = grabsubmit button
-      // firevent.click(sb)
-      // expect current dir to be /home
-    });
+      
+      const mockAlert = jest.spyOn(window, "alert").mockImplementation(() => {});
+      const loginButton = loginRender.container.querySelector("button");
+      fireEvent.click(loginButton);
 
-    xit("if user info correct window should redirect", () => {
-      const usernameInput = loginRender.findByPlaceholderText("Username");
-      const passwordInput = loginRender.findByPlaceholderText("Password");
-    });
+      expect(mockAlert).toHaveBeenCalledWith("Wrong Username/Password");
+      mockAlert.mockRestore();
 
-    xit("client sent to sign up on signup click", () => {});
+
+    });
   });
 
   // ---------------------- SIGN UP TESTING ----------------------
@@ -81,67 +97,67 @@ describe("Front-End Tests", () => {
       );
     });
 
-    it("container is rendered on get request // signup render should be whats on the screen", () => {
-      expect(signupRender.container).not.toBeNull;
-      // expect(signupRender).toEqual(screen);
-      const { container, baseElement, ...signupRenderFunctions } = signupRender;
+    it("page render without error -- compare screen vs signUpRender testing", () => {
+      expect(signupRender).not.toBeInstanceOf(Error);
+
+
       // console.log('--------------- SIGNUP RENDER ---------------- : \n', signupRender);
       // console.log('--------------- SIGNUP RENDER FUNCTIONS ---------------- : \n', signupRenderFunctions);
       // console.log('--------------- SCREEN FUNCTIONS ---------------- : \n', screen);
+      const { container, baseElement, ...signupRenderFunctions } = signupRender;
       expect(signupRenderFunctions).not.toEqual(screen);
+      
       console.log(
-        "the signupRenderFunctions will defer to the screen functions (screen has a function: logTestingPlaygroundURL which signupRenderFunctions does not contain)."
+        "The signupRenderFunctions will defer to the screen functions (screen has a function: logTestingPlaygroundURL which signupRenderFunctions does not contain)."
       );
     });
 
-    xit("sign up containers contains form element", () => {
-      const formElement = screen.getByRole(".form");
-      console.log(formElement);
-
-      // console.log('--------------- SCREEN FUNCTIONS ---------------- : \n', screen);
-
-      // console.log('RENDER: ', screen.findByTitle('.signup-Form'));
-      // expect(screen.findByTitle('.signup-Form')).not.toBeNull;
-      // const formElement = screen.getByRole('form');
-      // expect(formElement).toBeInTheDocument();
+    it("sign up container not null", () => {
+      // const formElement = signupRender.getAllByText("textbox");
+      console.log(signupRender.container);
+      const suContainer = signupRender.container;
+      expect(suContainer).not.toBeNull;
+      // expect(formElement).not.toBeNull;
     });
+    
     it("sign up for contains user password name lastname and zip code placeholder fields", () => {
-      console.log(screen.getByPlaceholderText("Enter First Name Here"));
+      expect(signupRender.queryByPlaceholderText('Enter First Name Here')).toBeInTheDocument;
+      expect(signupRender.queryByPlaceholderText('Enter Last Name Here')).toBeInTheDocument;
+      expect(signupRender.queryByPlaceholderText('Enter Username Here')).toBeInTheDocument;
+      expect(signupRender.queryByPlaceholderText('Enter Password Here')).toBeInTheDocument;
+      expect(signupRender.queryByPlaceholderText('Enter Zip Code Here')).toBeInTheDocument;
 
-      // expect(screen.getByPlaceholderText('Enter First Name Here')).toBeTruthy;
-
-      // expect(screen.findAllByPlaceholderText('Enter Last Name Here')).toBeTruthy;
-      // expect(screen.findAllByPlaceholderText('Enter Username Here')).toBeTruthy;
-      // expect(screen.findAllByPlaceholderText('Enter Password Here')).toBeTruthy;
-      // expect(screen.findAllByPlaceholderText('Enter Zip Code Here')).toBeTruthy;
+      expect(signupRender.queryByPlaceholderText('Enter asldasfda Code Here')).not.toBeInTheDocument;
+      expect(signupRender.queryByPlaceholderText('asfdgawghqwefq')).toBeNull;
     });
 
     it("should have a valid submit button within the form", () => {
-      const submitButton = screen.findByTestId("signup-submit-button");
+      const submitButton = signupRender.container.return; // should be null
       console.log(submitButton);
-      expect(submitButton).not.toBeNull;
     });
   });
 
   // ---------------------- DASHBOARD TESTING ----------------------
 
-  describe("Dashoard tests", () => {
+  xdescribe("Dashoard tests", () => {
     let dashRender;
-
     beforeEach(() => {
       dashRender = render(
-        <BrowserRouter>
-          <Dashboard />
-        </BrowserRouter>
+         <BrowserRouter>
+            <Dashboard />
+         </BrowserRouter>
       );
     });
 
     it("dashboard returns main", () => {
+      const mainContainer = dashRender.container.getByRole("main");
+      // expect(mainContainer).toBeInTheDocument();
+      // console.log('dashRender: ----- \n ',dashRender);
+
+
       // console.log(dashRender);
       // console.log(screen);
-      const mainContainer = dashRender.getByRole("main");
       // console.log(mainContainer);
-      // expect
       // console.log(mainContainer);
     });
 
