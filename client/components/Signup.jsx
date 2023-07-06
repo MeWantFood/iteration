@@ -7,6 +7,7 @@ function Signup() {
   const navigate = useNavigate();
 
   const URL = 'http://localhost:3000/signup';
+  const URL = 'http://localhost:3000/signup';
 
   const firstNameRef = useRef(null);
   const lastNameRef = useRef(null);
@@ -18,15 +19,14 @@ function Signup() {
     e.preventDefault();
     console.log(e);
     // const formData = new FormData();
-
     // const firstName = formData.get("firstname");
     // const lastName = formData.get("lastname");
     // const username = formData.get("username");
     // const password = formData.get("password");
     // const zipcode = formData.get("zipcode");
 
-    const firstName = firstNameRef.current.value;
-    const lastName = lastNameRef.current.value;
+    const first_name = firstNameRef.current.value;
+    const last_name = lastNameRef.current.value;
     const username = usernameRef.current.value;
     const password = passwordRef.current.value;
     const zipcode = zipcodeRef.current.value;
@@ -34,31 +34,37 @@ function Signup() {
     fetch(URL, {
       method: 'POST',
       mode: 'cors',
+      method: 'POST',
+      mode: 'cors',
       headers: {
+        'Content-Type': 'application/json',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        first_name: firstName,
-        last_name: lastName,
-        username: username,
-        password: password,
-        zipcode: zipcode,
+        first_name,
+        last_name,
+        username,
+        password,
+        zipcode,
       }),
     })
       .then((res) => {
         return res.json();
       })
       .then((data) => {
-        console.log('this is data:', data);
-        navigate('/');
+        // console.log('this is data:', data);
+        navigate('/home');
       })
-      .catch((error) => {
+      .catch(((error)) =>  {
         console.error('invalid setup');
       });
   };
 
   const goBack = () => {
+
+  const goBack = () => {
     navigate('/');
+  };
   };
 
   return (

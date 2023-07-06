@@ -1,11 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './login.scss';
+import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './login.scss';
 
 function Login({ loggedInSetter }) {
   //direct you anywhere as long as you have specified that path before
   const navigate = useNavigate();
 
+  const URL = 'http://localhost:3000/login';
   const URL = 'http://localhost:3000/login';
 
   const usernameRef = useRef(null);
@@ -19,12 +23,15 @@ function Login({ loggedInSetter }) {
     fetch(URL, {
       method: 'POST',
       mode: 'cors',
+      method: 'POST',
+      mode: 'cors',
       headers: {
+        'Content-Type': 'application/json',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        username: username,
-        password: password,
+        username,
+        password,
       }),
     })
       .then((res) => {
@@ -33,12 +40,14 @@ function Login({ loggedInSetter }) {
       .then((data) => {
         if (data.error) {
           alert('Wrong Username/Password');
+          alert('Wrong Username/Password');
         } else {
           loggedInSetter(data);
           navigate('/home');
         }
       })
       .catch((err) => {
+        console.log('Need to doublecheck username/password');
         console.log('Need to doublecheck username/password');
       });
   };
