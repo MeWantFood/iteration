@@ -5,7 +5,7 @@ import './dashboard.scss';
 import axios from 'axios';
 
 function Dashboard({ loggedInUser }) {
-  const [zipcode, setZipcode] = useState(loggedInUser.zipcode);
+  const [zipcode, setZipcode] = useState();
 
   const zipcodeSetter = setZipcode;
 
@@ -14,6 +14,9 @@ function Dashboard({ loggedInUser }) {
   const [fetchedData, setFetchedData] = useState([]);
 
   useEffect(() => {
+    if (!loggedInUser.zipcode || loggedInUser.zipcode.length < 5)
+      loggedInUser.zipcode = '11238';
+    setZipcode(loggedInUser.zipcode);
     axios
       // .get(`http://localhost:3000/yelp/${loggedInUser.zipcode}`)
       .get(`http://localhost:3000/yelp/${zipcode}`)
