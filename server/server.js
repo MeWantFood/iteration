@@ -31,7 +31,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // allows us to store the cookie on our backend
-// app.use(cookieParser());
+app.use(cookieParser());
 
 // statically serve everything in the build folder on the route '/build'
 app.use(express.static(path.join(__dirname, '../build')));
@@ -52,7 +52,7 @@ app.post(
   cookieController.setSSID,
   sessionController.startSession,
   (req, res) => {
-    console.log('--entering post method for route--');
+    // console.log('--entering post method for route--');
     return res.status(200).json(res.locals.newUser);
   }
 );
@@ -64,8 +64,8 @@ app.post(
   sessionController.startSession,
   (req, res) => {
     // upon successful sign up
-    console.log('----about to return a status----');
-    console.log('res.locals rn: ', res.locals);
+    // console.log('----about to return a status----');
+    // console.log('res.locals rn: ', res.locals);
     return res.status(200).json(res.locals.user);
   }
 );
@@ -93,6 +93,6 @@ app.use((err, req, res, next) => {
 
 app.listen(3000, () => {
   console.log('Express listening on port 3000');
-}); //listens on port 3000 -> http://localhost:3000/
+}); // listens on port 3000 -> http://localhost:3000/
 
 module.exports = app;

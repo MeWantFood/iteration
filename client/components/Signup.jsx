@@ -49,7 +49,7 @@ function Signup() {
       })
       .then((data) => {
         // console.log('this is data:', data);
-        navigate('/');
+        navigate('/home');
       })
       .catch((error) => {
         console.error('invalid setup');
