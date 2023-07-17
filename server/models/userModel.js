@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
+const SALT_WORK_FACTOR = 10;
 const Schema = mongoose.Schema;
 
 // set a schema for the 'users' collectionx
@@ -23,6 +25,26 @@ const userSchema = new Schema({
     type: Number,
     required: true,
   },
+});
+
+//for pw hashing
+// User.create({})
+// --> const newUser = new User({});
+// --> newUser.save();
+userSchema.pre('save', function (next) {
+  bcrypt
+    .hash(this.password, SALT_WORK_FACTOR)
+    .then((hash) => {
+      this.password = hash;
+      return next();
+    })
+    .catch((err) => {
+      return next({
+        log: `userSchema.presave ERROR in bcrypt.hash: ${err}`,
+        status: 500,
+        message: { error: 'ERROR in password hashing. See log.' },
+      });
+    });
 });
 
 const User = mongoose.model('User', userSchema);
