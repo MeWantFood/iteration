@@ -16,6 +16,7 @@ SessionController.startSession = (req, res, next) => {
 };
 
 SessionController.isLoggedIn = (req, res, next) => {
+  console.log('----session isLoggedIn check----')
   Session.findOne({ cookieId: req.cookies.ssid })
     .then((session) => {
         if (!session) {
@@ -23,6 +24,7 @@ SessionController.isLoggedIn = (req, res, next) => {
             return res.redirect('/login');
         } else {
             // session is valid
+            console.log('----session is valid----')
             return next();
         }
     })

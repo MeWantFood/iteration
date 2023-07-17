@@ -36,6 +36,7 @@ UserController.createUser = (req, res, next) => {
 
 // get method for fetching user based off of username
 UserController.verifyUser = (req, res, next) => {
+  console.log('------entering create UserController.verifyUser----');
   const { username, password } = req.body;
   // confirm that both the username and password field are submitted
   if (!username || !password) {

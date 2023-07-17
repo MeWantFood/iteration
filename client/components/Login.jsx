@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './login.scss';
+import React, { useState, useEffect, useRef } from 'react';
 
-function Login() {
+function Login({ loggedInSetter }) {
   //direct you anywhere as long as you have specified that path before
   const navigate = useNavigate();
 
@@ -34,6 +34,7 @@ function Login() {
         if (data.error) {
           alert('Wrong Username/Password');
         } else {
+          loggedInSetter(data);
           navigate('/home');
         }
       })
@@ -43,25 +44,25 @@ function Login() {
   };
 
   return (
-    <div className="login-background">
-      <form onSubmit={handleSubmit} className="login-form">
-        <p className="title">ME WANT FOOD</p>
+    <div className='login-background'>
+      <form onSubmit={handleSubmit} className='login-form'>
+        <p className='title'>ME WANT FOOD</p>
         <input
           ref={usernameRef}
-          className="login-input"
-          name="username"
-          type="text"
-          placeholder="Username"
+          className='login-input'
+          name='username'
+          type='text'
+          placeholder='Username'
         />
         <input
           ref={passwordRef}
-          className="login-input"
-          name="password"
-          type="password"
-          placeholder="Password"
+          className='login-input'
+          name='password'
+          type='password'
+          placeholder='Password'
         />
         <button>Login</button>
-        <a href="/signup">SIGN UP</a>
+        <a href='/signup'>SIGN UP</a>
       </form>
     </div>
   );

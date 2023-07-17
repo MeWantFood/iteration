@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './signup.scss';
 
@@ -16,7 +16,7 @@ function Signup() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    console.log(e);
     // const formData = new FormData();
     // const firstName = formData.get("firstname");
     // const lastName = formData.get("lastname");
@@ -49,7 +49,7 @@ function Signup() {
       })
       .then((data) => {
         // console.log('this is data:', data);
-        navigate('/home');
+        navigate('/');
       })
       .catch((error) => {
         console.error('invalid setup');
@@ -57,66 +57,67 @@ function Signup() {
   };
 
   const goBack = () => {
-    navigate('/');
+    const goBack = () => {
+      navigate('/');
+    };
   };
 
   return (
-    <div className="signup-background">
-      <svg
+    <div className='signup-background'>
+      {/* <svg
         onClick={goBack}
-        xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
-        fill="currentColor"
-        className="bi bi-chevron-left"
-        viewBox="0 0 16 16"
-      >
+        xmlns='http://www.w3.org/2000/svg'
+        width='16'
+        height='16'
+        fill='currentColor'
+        // class='bi bi-chevron-left'
+        viewBox='0 0 16 16'>
         <path
-          fillRule="evenodd"
-          d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"
+          fill-rule='evenodd'
+          d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'
         />
-      </svg>
-      <form className="signup-form" onSubmit={handleSubmit}>
+      </svg> */}
+      <form className='signup-form' onSubmit={handleSubmit}>
         <input
           ref={firstNameRef}
-          className="signup-input"
-          name="firstname"
-          type="text"
-          placeholder="Enter First Name Here"
+          className='signup-input'
+          name='firstname'
+          type='text'
+          placeholder='Enter First Name Here'
         />
         <input
           ref={lastNameRef}
-          className="signup-input"
-          name="lastname"
-          type="text"
-          placeholder="Enter Last Name Here"
+          className='signup-input'
+          name='lastname'
+          type='text'
+          placeholder='Enter Last Name Here'
         />
         <input
           ref={usernameRef}
-          className="signup-input"
-          name="username"
-          type="text"
-          placeholder="Enter Username Here"
+          className='signup-input'
+          name='username'
+          type='text'
+          placeholder='Enter Username Here'
         />
         <input
           ref={passwordRef}
-          className="signup-input"
-          name="password"
-          type="password"
-          placeholder="Enter Password Here"
+          className='signup-input'
+          name='password'
+          type='password'
+          placeholder='Enter Password Here'
         />
         <input
           ref={zipcodeRef}
-          className="signup-input"
-          name="zipcode"
-          type="text"
-          placeholder="Enter Zip Code Here"
+          className='signup-input'
+          name='zipcode'
+          type='text'
+          placeholder='Enter Zip Code Here'
         />
         <input
-          id="formButton"
-          type="submit"
-          value="Submit"
-          className="submit-button"
+          id='formButton'
+          type='submit'
+          value='Submit'
+          className='submit-button'
         />
       </form>
     </div>

@@ -64,8 +64,8 @@ app.post(
   sessionController.startSession,
   (req, res) => {
     // upon successful sign up
-    // console.log('----about to return a status----');
-    // console.log('res.locals rn: ', res.locals);
+    console.log('----about to return a status----');
+    console.log('res.locals rn: ', res.locals);
     return res.status(200).json(res.locals.user);
   }
 );
